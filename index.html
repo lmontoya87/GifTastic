@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<title>GifTastic!</title>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
+
+ <!-- //********GOOGLE FONTS********// -->
+  <link href="https://fonts.googleapis.com/css?family=Josefin+Sans|Poppins" rel="stylesheet">
+
+	<link rel="stylesheet" href="assets/css/reset.css">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+
+<body>
+	<div class="container">
+	<h1>Music Search!</h1>
+		<div id="viewButton">
+		</div>
+
+		<form id="mForm">
+			<label for="musicInput">Add A Band or Artist Name</label>
+			<input name="topic" type="text" id="musicInput">
+			<br>
+			<input id="addSelection" type="submit" value="Submit">
+		</form>
+
+		<div id="images"></div>
+		</div>
+
+
+<script src="http://code.jquery.com/jquery-2.1.3.min.js"></script>
+<script type="text/javascript">
+
+var musicSelection = ["The Smiths", "The Cure", "Nirvana", "David Bowie", "Adam and the Ants", "Prince", "U2"];
+
+$("#addSelection").on("click", function(event) {
+  event.preventDefault();
+	var topic = $("#musicInput").val().trim();
+	musicSelection.push(topic);
+	$("#musicInput").val("");
+	renderButtons();
+});
+
+    function renderButtons() {
+        $("#viewButton").empty(); 
+        // *****LOOPS THROUGH ARRAY OF SELECTIONS, ADDS A BUTTON ELEMENT, A CLASS AND AN ATTRIBUTE*****//
+        for (var i = 0; i < musicSelection.length; i++) {
+        	var a = $("<button>");
+          a.addClass("addButton");
+          a.attr("data-name", musicSelection[i]);
+         	a.text(musicSelection[i]);
+          $("#viewButton").append(a);
+        }
+
+        $(".addButton").on("click", function() {
+  			var topicButton = $(this).attr("data-name");
+			  var APIkey = "&api_key=dc6zaTOxFJmzC";
+			  var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + topicButton + "&limit=10&rating=pg" + "&api_key=dc6zaTOxFJmzC";
+
+        	$.ajax({
+          	url: queryURL,
+          	method: "GET"
+        	}).done(function(response) {
+              $("#images").empty();
+              for (var L = 0; L < response.data.length; L++) {
+              var imageBox = $("<div>");
+         		  var imgRating = $("<p>");
+              imgRating.addClass("imgRating");
+              imgRating.append("Rating: " + response.data[L].rating);
+
+          		var image = $("<img>");
+              image.attr({
+                "src": response.data[L].images.original_still.url,
+                "data-animate": response.data[L].images.original.url,
+                "data-still": response.data[L].images.original_still.url,
+                "data-state": "still"
+              });
+
+              $(imageBox).append(imgRating);
+          		$(imageBox).append(image);
+              $("#images").append(imageBox);
+    // console.log(response);              
+        		  }
+              $("img").on("click", function() {
+                var state = $(this).attr("data-state");
+    // console.log(state);
+                  if(state === "still") {
+                    $(this).attr("src", $(this).attr("data-animate"));
+                    $(this).attr("data-state", "animate");
+                  }
+
+                  else {
+                    $(this).attr("src", $(this).attr("data-still"));
+                    $(this).attr("data-state", "still");
+                  }                       
+              });
+
+            });      
+  		    });    
+        }
+
+
+
+renderButtons();
+
+</script>      
+
+</body>
+</html>

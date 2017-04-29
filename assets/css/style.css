@@ -1,0 +1,64 @@
+html, body {
+	height: 100%;
+}
+
+.container {
+	padding: 20px;
+	font-family: 'Josefin Sans', sans-serif;
+	font-weight: bold;
+	margin: 0 auto; 
+	min-height: 100%; /*used for sticky footer*/
+	overflow: hidden; /*used for sticky footer*/
+	background-image:url('../images/grey_wash_wall.png');
+}
+
+h1 {
+	margin-bottom: 20px;
+	font-size: 2.3em;
+	font-family: 'Poppins', sans-serif;
+}
+
+form {
+	text-align: right;
+	margin: 20px;
+	color: white;
+}
+
+.addButton {
+	margin-right: 20px;
+	font-family: 'Josefin Sans', sans-serif;
+	font-weight: bold;
+	cursor: pointer;
+	box-shadow: 5px 5px 5px #222;
+}
+
+.addButton:hover {
+	background-color: #dcdcdc;
+}
+
+#addSelection {
+	margin: 10px;
+	cursor: pointer;
+	box-shadow: 5px 5px 5px #222;
+}
+
+#images {
+	margin:20px;
+	cursor: pointer;
+}
+
+#images div {
+	display: inline-block;
+	margin-right: 20px;
+}
+
+.imgRating {
+	width: 250px;
+	margin: 10px 0px 5px;
+}
+
+img { 
+	width: 250px;
+	height: 200px;
+	border: 2px solid black;
+}
